@@ -12,6 +12,9 @@ $routes->group('forum', ['namespace' => '\Serasera\Forum\Controllers'], static f
         
     });
     
+    $routes->get('rss', 'RssController::index');
+    $routes->get('rss/updates', 'RssController::updates');
+
     
     $routes->group('message', static function($routes) {
 
@@ -19,12 +22,12 @@ $routes->group('forum', ['namespace' => '\Serasera\Forum\Controllers'], static f
         $routes->get('history', 'MessageController::history');
         $routes->get('user', 'MessageController::user');
         $routes->add('move/(:segment)', 'MessageController::move/$1', ['filter' => 'auth']);
-        $routes->add('reply/(:segment)(:any)', 'MessageController::reply/$1$2', ['filter' => 'auth']);
-        $routes->add('new(:any)', 'MessageController::create', ['filter' => 'auth']);
+        $routes->match(['get', 'post'], 'new(:any)', 'MessageController::create$1', ['filter' => 'auth']);
         $routes->add('edit/(:segment)', 'MessageController::edit/$1', ['filter' => 'auth']);
         $routes->add('delete/(:segment)', 'MessageController::delete/$1', ['filter' => 'auth']);
         $routes->add('search', 'MessageController::search');
         $routes->get('unsubscribe/(:segment)', 'MessageController::unsubscribe/$1', ['filter' => 'auth']);
+        $routes->match(['get', 'post'],'(:segment)/reply(:any)', 'MessageController::reply/$1$2', ['filter' => 'auth']);
         $routes->get('(:segment)(:any)', 'MessageController::show/$1$2');
         
     });    
