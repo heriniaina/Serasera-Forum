@@ -1,9 +1,12 @@
 <?php $this->extend(getenv('serasera.layout')) ?>
 <?php $this->section('main'); ?>
-<h1 class="mb-3">
+<h3 class="my-3">
     <?php echo $page_title; ?>
-</h1>
+</h3>
 
+<div class="mb-3">
+    <?php echo anchor('forum/message/new/' . $topic['tid'], '<i class="bi-pencil-square me-3"></i> ' . lang('Forum.create_message_here'), ['class' => 'btn btn-primary']); ?>
+</div>
 <?php foreach ($messages as $row) { ?>
     <div class="d-flex mb-3 border p-3">
         <div class="me-3">

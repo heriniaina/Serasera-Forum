@@ -1,8 +1,9 @@
 <?php $this->extend(getenv('serasera.layout')) ?>
 <?php $this->section('main'); ?>
-<h1 class="mb-3">
+<h3 class="my-3">
     <?php echo $page_title; ?>
-</h1>
+</h3>
+
 
 <?php foreach ($topics as $row) { ?>
     <div class="d-flex mb-3 border p-3">

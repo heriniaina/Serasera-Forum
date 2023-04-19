@@ -15,7 +15,7 @@ class TopicController extends BaseController {
 
         
         if(!is_null($this->user)) {
-            $topicModel->where("(username = '" .$this->user->username. "' OR gid IN ('".implode("', '", $this->user->groups)."')) ");
+            $topicModel->where("(username = '" .$this->user['username']. "' OR gid IN ('".implode("', '", $this->user['groups'])."')) ");
         }
         $this->data['topics'] = $topicModel->orderBy('title')->findAll();
 
@@ -29,7 +29,7 @@ class TopicController extends BaseController {
         
         $builder = $topicModel->where('tid', $tid);
         if(!is_null($this->user)) {
-            $builder->where("(username = '" .$this->user->username. "' OR gid IN ('".implode("', '", $this->user->groups)."')) ");
+            $builder->where("(username = '" .$this->user['username']. "' OR gid IN ('".implode("', '", $this->user['groups'])."')) ");
         }
         $topic = $builder->first();
 
@@ -46,6 +46,7 @@ class TopicController extends BaseController {
         $this->data['messages'] = $messages;
         $this->data['pager'] = $messageModel->pager;
         $this->data['page_title'] = $topic['title'];
+        $this->data['topic'] = $topic;
 
         return view('\Serasera\Forum\Views\topic_show', $this->data);
     }
