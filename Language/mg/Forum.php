@@ -30,6 +30,7 @@ return [
     'title_order' => 'lohateny',
     'username_order' => 'nampiditra',
     'date_order' => 'daty',
+    'posted_by' => 'nampidirin\'i <b>{0}</b>',
 
 
 ];

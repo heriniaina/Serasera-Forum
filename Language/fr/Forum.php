@@ -30,6 +30,6 @@ return [
     'title_order' => 'titre',
     'username_order' => 'auteur',
     'date_order' => 'date',
-
+    'posted_by' => 'inserés par <b>{0}</b>',
 
 ];
