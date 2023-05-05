@@ -9,7 +9,7 @@
     <form method="post">
         <?php echo csrf_field(); ?>
         <div class="d-flex mb-3 border p-3">
-            <div class="me-3">
+            <div class="me-3 d-none d-md-block">
                 <img src="https://avatar.serasera.org/<?php echo md5($user['username']) ?>.jpg"
                     class="border rounded-circle"
                     style="width: 50px">
