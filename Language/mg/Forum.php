@@ -31,6 +31,7 @@ return [
     'username_order' => 'nampiditra',
     'date_order' => 'daty',
     'posted_by' => 'nampidirin\'i <b>{0}</b>',
+    'message_inserted' => 'Tafiditra soa amantsara ny lahatsoratra. Misaotra anao.',
 
 
 ];

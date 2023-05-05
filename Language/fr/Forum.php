@@ -31,5 +31,6 @@ return [
     'username_order' => 'auteur',
     'date_order' => 'date',
     'posted_by' => 'inserés par <b>{0}</b>',
+    'message_inserted' => 'Message inséré avec succès. Merci',
 
 ];

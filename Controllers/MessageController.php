@@ -106,7 +106,7 @@ class MessageController extends BaseController
             (new TopicModel())->where('tid', $data['tid'])->set(['last_message' => $data['message'], 'last_mid' => $data['last_mid'], 'last_username' => $data['username'], 'last_date' => $data['date'], 'messages' => 'messages + 1'])->update();
 
 
-            return;
+            return redirect()->to('forum/topic/' . $data['tid'])->with('message', lang('Forum.message_inserted'));
         }
 
         $this->data['validation'] = $this->validator;
