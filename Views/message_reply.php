@@ -64,7 +64,7 @@ sceditor.create(textarea, {
 	format: 'bbcode',
     width: '100%',
     emoticonsEnabled: false,
-    toolbar: 'bold,italic,underline,color|link,quote,image,bulletlist,orderedlist,youtube',
+    toolbar: 'bold,italic,underline,color|link,quote,image,bulletlist,orderedlist,youtube|source',
 	style: 'https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/content/default.min.css'
 });
 </script>

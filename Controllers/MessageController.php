@@ -218,8 +218,21 @@ class MessageController extends BaseController
         $this->data['validation'] = $this->validator;
         $this->data['page_title'] = lang('Forum.reply_to', [$message['username']]);
         $this->data['message'] = $message;
-        $this->data['bbCode'] = new BBCode();
 
+
+        $bbCode = new BBCode();
+        $bbCode->addParser(
+            'custom-quote',
+            '/\[quote\=(.*?)\](.*?)\[\/quote\]/s',
+            '<blockquote><em class="author">$1:</em><br />$2</blockquote>',
+            '$2'
+        )
+            ->addParser('ulist', '/\[ul\](.*?)\[\/ul\]/s', '<ul>$1</ul>', '$1')
+            ->addParser('olist', '/\[ol\](.*?)\[\/ol\]/s', '<ol>$1</ol>', '$1')
+            ->addParser('color', '/\[color\=(.*?)\](.*?)\[\/color\]/s', '<span style="color: $1;">$2</span>', '$2')
+            ->addParser('list', '/\[li\](.*?)\[\/li\]/s', '<li>$1</li>', '$1');
+
+        $this->data['bbCode'] = $bbCode;
 
         return view('\Serasera\Forum\Views\message_reply', $this->data);
 
@@ -232,7 +245,7 @@ class MessageController extends BaseController
         $message = $messageModel->where('mid', $mid)->first();
 
         if (!$message) {
-            return redirect()->to('forum/topic')->with('error', lang('Forum.message_not_found'));
+            return redirect()->to('forum/topics')->with('error', lang('Forum.message_not_found'));
         }
 
         //has to be a thread 
@@ -282,8 +295,27 @@ class MessageController extends BaseController
         )
             ->addParser('ulist', '/\[ul\](.*?)\[\/ul\]/s', '<ul>$1</ul>', '$1')
             ->addParser('olist', '/\[ol\](.*?)\[\/ol\]/s', '<ol>$1</ol>', '$1')
+            ->addParser('color', '/\[color\=(.*?)\](.*?)\[\/color\]/s', '<span style="color: $1;">$2</span>', '$2')
             ->addParser('list', '/\[li\](.*?)\[\/li\]/s', '<li>$1</li>', '$1');
         $this->data['bbCode'] = $bbCode;
         return view('\Serasera\Forum\Views\message_show', $this->data);
+    }
+
+    public function delete($mid)
+    {
+        $messageModel = new MessageModel();
+
+        $message = $messageModel->where('mid', $mid)->first();
+
+        if (!$message) {
+            return redirect()->to('forum/topics')->with('error', lang('Forum.message_not_found'));
+        }
+
+        if ($messageModel->where('pid', $mid)->countAllResults() > 0 && $this->user['level']['forum'] < LEVEL_DEL) {
+            return redirect()->back()->withInput()->with('error', lang('Forum.cannot_be_deleted_replied'));
+        }
+
+
+        echo $mid;
     }
 }
