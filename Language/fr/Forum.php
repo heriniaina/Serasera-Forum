@@ -33,4 +33,14 @@ return [
     'posted_by' => 'inserés par <b>{0}</b>',
     'message_inserted' => 'Message inséré avec succès. Merci',
 
+    'in_title' => 'Dans le titre',
+    'in_author' => 'Dans l\'auteur',
+    'message_order' => 'Ordre',
+    'by_date' => 'Selon la date',
+    'by_title' => 'Selon le titre',
+    'by_author' => 'Selon l\'auteur',
+    'in_message' => 'Dans le texte',
+    'upload_image' => 'Charger une image',
+
+
 ];

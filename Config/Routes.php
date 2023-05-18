@@ -18,18 +18,23 @@ $routes->group('forum', ['namespace' => '\Serasera\Forum\Controllers'], static f
     
     $routes->group('message', static function($routes) {
 
-        $routes->add('/', 'MessageController::index');
+        $routes->get('/', 'MessageController::index');
+        //$routes->post('image', 'MessageController::image', ['filter' => 'auth']); 
+        $routes->get('delete/(:segment)', 'MessageController::delete/$1', ['filter' => 'auth']);
         $routes->get('history', 'MessageController::history');
         $routes->get('user', 'MessageController::user');
-        $routes->add('move/(:segment)', 'MessageController::move/$1', ['filter' => 'auth']);
+        $routes->get('move/(:segment)', 'MessageController::move/$1', ['filter' => 'auth']);
         $routes->match(['get', 'post'], 'new(:any)', 'MessageController::create$1', ['filter' => 'auth']);
-        $routes->add('edit/(:segment)', 'MessageController::edit/$1', ['filter' => 'auth']);
-        $routes->add('delete/(:segment)', 'MessageController::delete/$1', ['filter' => 'auth']);
-        $routes->add('search', 'MessageController::search');
-        $routes->get('unsubscribe/(:segment)', 'MessageController::unsubscribe/$1', ['filter' => 'auth']);
+        $routes->match(['get', 'post'],'edit/(:segment)', 'MessageController::edit/$1', ['filter' => 'auth']);
+        
+        $routes->match(['get', 'post'],'search', 'MessageController::search');
+        $routes->match(['get', 'post'],'unsubscribe/(:segment)', 'MessageController::unsubscribe/$1', ['filter' => 'auth']);
         $routes->match(['get', 'post'],'(:segment)/reply(:any)', 'MessageController::reply/$1$2', ['filter' => 'auth']);
         $routes->get('(:segment)(:any)', 'MessageController::show/$1$2');
+        
         
     });    
     
 });
+
+$routes->post('api/forum/image','\Serasera\Forum\Controllers\MessageController::image', ['filter' => 'auth']); 

@@ -5,6 +5,7 @@ namespace Serasera\Forum\Controllers;
 use CodeIgniter\Events\Events;
 use Serasera\Base\Controllers\BaseController;
 use Serasera\Base\Models\NotificationModel;
+use Serasera\Forum\Models\ImageModel;
 use Serasera\Forum\Models\MessageModel;
 use Serasera\Forum\Models\TopicModel;
 use Genert\BBCode\BBCode;
@@ -17,7 +18,7 @@ class MessageController extends BaseController
 
         $messageModel = new MessageModel();
 
-        $builder = $messageModel->getMessagesWithTopic();
+        $builder = $messageModel->getMessagesWithTopic()->where('m.pid', '');
         $this->data['page_title'] = lang('Forum.message_list');
         $this->data['page_description'] = '';
 
@@ -317,5 +318,54 @@ class MessageController extends BaseController
 
 
         echo $mid;
+    }
+
+    public function image()
+    {
+        $validationRule = [
+            'image' => [
+                'label' => 'Image File',
+                'rules' => 'uploaded[image]'
+                . '|is_image[image]'
+                . '|mime_in[image,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
+                . '|max_size[image,5000]',
+            ],
+        ];
+        if (!$this->validate($validationRule)) {
+            $data = ['success' => false, 'error' => true, 'msg' => $this->validator->getErrors()];
+            return $this->response->setJSON($data);
+        }
+
+
+
+        $img = $this->request->getFile('image');
+        if (!$img->hasMoved()) {
+            $imageModel = new ImageModel();
+
+            $directory = date('Y') . '/' . date('m') . '/' . date('d');
+            $img->move(ROOTPATH . 'public/media/images/' . $directory . '/o/');
+
+            //600 m o
+            if (!file_exists(ROOTPATH . 'public/media/images/' . $directory . '/m/')) {
+                mkdir(ROOTPATH . 'public/media/images/' . $directory . '/m/', 0777, true);
+            }
+            $image = \Config\Services::image()
+                ->withFile(ROOTPATH . 'public/media/images/' . $directory . '/o/' . $img->getName())
+                ->resize(600, 600, true, 'width')
+                ->save(ROOTPATH . 'public/media/images/' . $directory . '/m/' . $img->getName())
+            ;
+
+            $data = [
+                'username' => $this->user['username'],
+                'file' => site_url('media/images/' . $directory . '/m/' . $img->getName()),
+                'date' => time(),
+            ];
+            $data['id'] = $imageModel->insert($data, true);
+
+            return $this->response->setJSON($data);
+        }
+
+        $data = ['success' => false, 'error' => true, 'msg' => 'The file has already been moved.'];
+        return $this->response->setJSON($data);
     }
 }

@@ -32,6 +32,16 @@ return [
     'date_order' => 'daty',
     'posted_by' => 'nampidirin\'i <b>{0}</b>',
     'message_inserted' => 'Tafiditra soa amantsara ny lahatsoratra. Misaotra anao.',
+    'cannot_be_deleted_replied' => 'Tsy azo fafaina io hafatra io fa efa nisy namaly',
+
+    'in_title' => 'Eo amin\'ny lohateny',
+    'in_author' => 'Eo amin\'ny mpanoratra',
+    'message_order' => 'Filaharany',
+    'by_date' => 'Araka ny daty',
+    'by_title' => 'Araka ny lohateny',
+    'by_author' => 'Araka ny mpanoratra',
+    'in_message' => 'Eo amin\'ny lahatsoratra',
+    'upload_image' => 'Hampiditra sary',
 
 
 ];
