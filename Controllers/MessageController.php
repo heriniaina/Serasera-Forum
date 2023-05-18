@@ -66,6 +66,7 @@ class MessageController extends BaseController
 
         $this->data['messages'] = $builder->paginate(20);
         $this->data['pager'] = $messageModel->pager;
+    
 
         return view('\Serasera\Forum\Views\message_index', $this->data);
     }
@@ -299,6 +300,8 @@ class MessageController extends BaseController
             ->addParser('color', '/\[color\=(.*?)\](.*?)\[\/color\]/s', '<span style="color: $1;">$2</span>', '$2')
             ->addParser('list', '/\[li\](.*?)\[\/li\]/s', '<li>$1</li>', '$1');
         $this->data['bbCode'] = $bbCode;
+
+
         return view('\Serasera\Forum\Views\message_show', $this->data);
     }
 
@@ -311,8 +314,8 @@ class MessageController extends BaseController
         if (!$message) {
             return redirect()->to('forum/topics')->with('error', lang('Forum.message_not_found'));
         }
-
-        if ($messageModel->where('pid', $mid)->countAllResults() > 0 && $this->user['level']['forum'] < LEVEL_DEL) {
+        $isadmin = isset($this->user['level']) && $this->user['level']['forum'] >= LEVEL_EDIT;
+        if ($messageModel->where('pid', $mid)->countAllResults() > 0 && !$isadmin) {
             return redirect()->back()->withInput()->with('error', lang('Forum.cannot_be_deleted_replied'));
         }
 
@@ -367,5 +370,57 @@ class MessageController extends BaseController
 
         $data = ['success' => false, 'error' => true, 'msg' => 'The file has already been moved.'];
         return $this->response->setJSON($data);
+    }
+
+    public function edit($mid)
+    {
+        $messageModel = new MessageModel();
+
+        $message = $messageModel->where('mid', $mid)->first();
+
+        if (!$message) {
+            return redirect()->to('forum/topics')->with('error', lang('Forum.message_not_found'));
+        }
+        $isadmin = isset($this->user['level']) && $this->user['level']['forum'] >= LEVEL_EDIT;
+        if($message['username'] != $this->user['username'] &&  !$isadmin) {
+            return redirect()->to('forum/message/' . $mid)->with('error', lang('Forum.only_owner_can_modify'));
+        }
+        if ($messageModel->where('pid', $mid)->countAllResults() > 0 && !$isadmin) {
+            return redirect()->to('forum/message/' . $mid)->with('error', lang('Forum.cannot_be_modified_replied'));
+        }
+
+        if (
+            $this->request->getMethod() === 'post' && $this->validate([
+                'message' => 'required',
+                'tid' => 'required'
+            ], [
+                    'message' => ['required' => lang('Forum.message_required')],
+                    'tid' => ['required' => lang('Forum.topic_required')]
+                ])
+        ) {
+
+
+
+            $data = [
+                'tid' => $this->request->getPost('tid'),
+                'title' => $this->request->getPost('title') ?? substr(trim(strip_tags($this->request->getPost('message'))), 0, 50) . '...',
+                'message' => strip_tags($this->request->getPost('message')),
+            ];
+
+            $messageModel = new MessageModel();
+            Events::trigger('serasera_forum_message_edit', $data);
+            $messageModel->update($message['id'], $data);
+            
+            return redirect()->to('forum/topic/' . $data['tid'])->with('message', lang('Forum.message_inserted'));
+        }
+
+        $this->data['validation'] = $this->validator;
+
+        $this->data['message'] = $message;
+        $this->data['topics'] = (new TopicModel())->where("(username = '" . $this->user['username'] . "' OR gid IN ('" . implode("', '", $this->user['groups']) . "')) ")->orderBy('title')->findAll();
+        $this->data['tid'] = $message['tid'];
+        $this->data['page_title'] = lang('Forum.modify_post');
+
+        return view('\Serasera\Forum\Views\message_edit', $this->data);
     }
 }

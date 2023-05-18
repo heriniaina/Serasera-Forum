@@ -44,4 +44,10 @@ return [
     'upload_image' => 'Hampiditra sary',
 
 
+    'cannot_be_modified_replied' => 'Tsy azo ovaina intsony io hafatra io satria efa nisy namaly',
+    'only_owner_can_modify' => 'Tsy anao io lahatsoratra io ka tsy azonao ovaina',
+    'modify_post' => 'Hanitsy lahatsoratra',
+    'edit' => 'Ahitsio',
+
+
 ];

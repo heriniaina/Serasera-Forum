@@ -41,6 +41,11 @@ return [
     'by_author' => 'Selon l\'auteur',
     'in_message' => 'Dans le texte',
     'upload_image' => 'Charger une image',
+    
+    'cannot_be_modified_replied' => 'Ce message ne peux plus être modifié car déjà répondu.',
+    'only_owner_can_modify' => 'Vous ne pouvez pas modifier ce message qui ne vous appartient pas.',
+    'modify_post' => 'Modifier un message',
+    'edit' => 'Modifier',
 
 
 ];

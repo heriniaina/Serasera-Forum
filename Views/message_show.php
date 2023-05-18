@@ -22,11 +22,17 @@
                     <?php echo date_ago($row['date']) ?>)
                 </em>
             </div>
-            <div>
+            
+                <?php if (isset($user) && $user['username'] == $row['username'] || isset($user['level']['forum']) && $user['level']['forum'] > LEVEL_EDIT) { ?>
+                    <div class="mb-3 text-end">
+                        <?php echo anchor('forum/message/edit/' . $row['mid'], lang('Forum.edit')) ?>
+                    </div>
+                <?php } ?>
+
                 <div class="">
                     <?php echo $bbCode->convertToHtml(nl2br(strip_tags($row['message']))) ?>
                     <div class="text-end mt-2">
-                        <?php echo anchor ('forum/message/' . $message['mid'] . '/reply/' . $row['id'], '<i class="bi-chat"></i> ' . lang('Forum.reply')); ?>
+                        <?php echo anchor('forum/message/' . $message['mid'] . '/reply/' . $row['id'], '<i class="bi-chat"></i> ' . lang('Forum.reply')); ?>
                     </div>
                 </div>
             </div>
@@ -91,14 +97,14 @@
 <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/sceditor.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/formats/bbcode.min.js"></script>
 <script>
-// Replace the textarea #example with SCEditor
-var textarea = document.getElementById('message');
-sceditor.create(textarea, {
-	format: 'bbcode',
-    width: '100%',
-    emoticonsEnabled: false,
-    toolbar: 'bold,italic,underline,color|link,quote,image,bulletlist,orderedlist,youtube|source',
-	style: 'https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/content/default.min.css'
-});
+    // Replace the textarea #example with SCEditor
+    var textarea = document.getElementById('message');
+    sceditor.create(textarea, {
+        format: 'bbcode',
+        width: '100%',
+        emoticonsEnabled: false,
+        toolbar: 'bold,italic,underline,color|link,quote,image,bulletlist,orderedlist,youtube|source',
+        style: 'https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/content/default.min.css'
+    });
 </script>
 <?php $this->endSection(); ?>
