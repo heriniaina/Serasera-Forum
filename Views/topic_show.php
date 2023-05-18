@@ -24,7 +24,7 @@
             </div>
             <div>
                 <div class="fw-bold">
-                    <?php echo $row['title'] ?>
+                <?php echo anchor('forum/message/' . $row['mid'], $row['title'])  ?>
                 </div>
                 <div class="">
                     <?php echo substr(strip_tags($row['message']), 0, 200) ?>...
