@@ -7,7 +7,7 @@
 <?php $request = service('request'); ?>
 <?php $i = ($request->getGet('page') ?? 1) * 20 - 19; ?>
 <?php foreach ($messages as $row) { ?>
-    <div class="d-flex mb-3 border p-3">
+    <div class="d-flex mb-3 border p-3 message-row">
         <a name="<?php echo $row['mid']; ?>"></a>
         <div class="me-3">
             <img src="https://avatar.serasera.org/<?php echo md5($row['username']) ?>.jpg" class="border rounded-circle"
@@ -29,7 +29,7 @@
                     </div>
                 <?php } ?>
 
-                <div class="">
+                <div class="message">
                     <?php echo $bbCode->convertToHtml(nl2br(strip_tags($row['message']))) ?>
                     <div class="text-end mt-2">
                         <?php echo anchor('forum/message/' . $message['mid'] . '/reply/' . $row['id'], '<i class="bi-chat"></i> ' . lang('Forum.reply')); ?>
