@@ -48,6 +48,10 @@ return [
     'only_owner_can_modify' => 'Tsy anao io lahatsoratra io ka tsy azonao ovaina',
     'modify_post' => 'Hanitsy lahatsoratra',
     'edit' => 'Ahitsio',
+    'only_owner_can_delete' => 'Ny tompon\'ny hafatra ihany no afaka mamafa azy.',
 
-
+    'message_deleted' => 'Voafafa soa amantsara ny hafatra.',
+    'delete_message' => 'Hamafa hafatra',
+    'delete' => 'Fafao',
+    'delete_confirm' => 'Hofafaina tokoa ny hafatra?',
 ];

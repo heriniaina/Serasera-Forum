@@ -46,6 +46,12 @@ return [
     'only_owner_can_modify' => 'Vous ne pouvez pas modifier ce message qui ne vous appartient pas.',
     'modify_post' => 'Modifier un message',
     'edit' => 'Modifier',
+    
+    'only_owner_can_delete' => 'Seulement l\'auteur peut supprimer un message.',
 
+    'message_deleted' => 'Le message a été supprimé avec succès.',
+    'delete_message' => 'Supprimer un message',
+    'delete' => 'Supprimer',
+    'delete_confirm' => 'Voulez-vous vraiment supprimer ce message ?',
 
 ];

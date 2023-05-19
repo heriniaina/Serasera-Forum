@@ -20,7 +20,7 @@ $routes->group('forum', ['namespace' => '\Serasera\Forum\Controllers'], static f
 
         $routes->get('/', 'MessageController::index');
         //$routes->post('image', 'MessageController::image', ['filter' => 'auth']); 
-        $routes->get('delete/(:segment)', 'MessageController::delete/$1', ['filter' => 'auth']);
+        $routes->get('delete/(:segment)(:any)', 'MessageController::delete/$1$2', ['filter' => 'auth']);
         $routes->get('history', 'MessageController::history');
         $routes->get('user', 'MessageController::user');
         $routes->get('move/(:segment)', 'MessageController::move/$1', ['filter' => 'auth']);

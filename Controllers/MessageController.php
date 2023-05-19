@@ -66,7 +66,7 @@ class MessageController extends BaseController
 
         $this->data['messages'] = $builder->paginate(20);
         $this->data['pager'] = $messageModel->pager;
-    
+
 
         return view('\Serasera\Forum\Views\message_index', $this->data);
     }
@@ -305,7 +305,7 @@ class MessageController extends BaseController
         return view('\Serasera\Forum\Views\message_show', $this->data);
     }
 
-    public function delete($mid)
+    public function delete($mid, $confirm = false)
     {
         $messageModel = new MessageModel();
 
@@ -315,12 +315,24 @@ class MessageController extends BaseController
             return redirect()->to('forum/topics')->with('error', lang('Forum.message_not_found'));
         }
         $isadmin = isset($this->user['level']) && $this->user['level']['forum'] >= LEVEL_EDIT;
+        if ($message['username'] != $this->user['username'] && !$isadmin) {
+            return redirect()->to('forum/message/' . $mid)->with('error', lang('Forum.only_owner_can_delete'));
+        }
         if ($messageModel->where('pid', $mid)->countAllResults() > 0 && !$isadmin) {
-            return redirect()->back()->withInput()->with('error', lang('Forum.cannot_be_deleted_replied'));
+            return redirect()->to('forum/message/' . $mid)->with('error', lang('Forum.cannot_be_deleted_replied'));
         }
 
+        if ($confirm) {
+            $tid = $message['tid'];
+            $messageModel->delete($message['id']);
+            //if not admin could not reach  here
+            $messageModel->where('pid', $mid)->delete();
 
-        echo $mid;
+            return redirect()->to('forum/topic/' . $tid)->with('message', lang('Forum.message_deleted'));
+        }
+
+        $this->data['page_title'] = lang('Forum.delete_message');
+        return view('\Serasera\Forum\Views\message_delete', $this->data);
     }
 
     public function image()
@@ -382,7 +394,7 @@ class MessageController extends BaseController
             return redirect()->to('forum/topics')->with('error', lang('Forum.message_not_found'));
         }
         $isadmin = isset($this->user['level']) && $this->user['level']['forum'] >= LEVEL_EDIT;
-        if($message['username'] != $this->user['username'] &&  !$isadmin) {
+        if ($message['username'] != $this->user['username'] && !$isadmin) {
             return redirect()->to('forum/message/' . $mid)->with('error', lang('Forum.only_owner_can_modify'));
         }
         if ($messageModel->where('pid', $mid)->countAllResults() > 0 && !$isadmin) {
@@ -410,7 +422,7 @@ class MessageController extends BaseController
             $messageModel = new MessageModel();
             Events::trigger('serasera_forum_message_edit', $data);
             $messageModel->update($message['id'], $data);
-            
+
             return redirect()->to('forum/topic/' . $data['tid'])->with('message', lang('Forum.message_inserted'));
         }
 
