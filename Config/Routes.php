@@ -33,7 +33,9 @@ $routes->group('forum', ['namespace' => '\Serasera\Forum\Controllers'], static f
         $routes->get('(:segment)(:any)', 'MessageController::show/$1$2');
         
         
-    });    
+    });
+
+    $routes->get('user/(:segment)', 'UserController::show/$1');
     
 });
 
