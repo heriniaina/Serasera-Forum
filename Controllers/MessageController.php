@@ -202,7 +202,10 @@ class MessageController extends BaseController
                 $i++;
             }
 
-            (new NotificationModel())->insertBatch($notify);
+            if(count($notify) > 0) {
+                (new NotificationModel())->insertBatch($notify);
+            }
+            
 
             //redirect 
             return redirect()->to('forum/message/' . $mid)->with('message', lang('Forum.reply_sent_successfully'));
