@@ -38,7 +38,7 @@
                     <div class="mb-3">
                         <div class="mb-3">
                             <textarea class="form-control" name="message" id="message"
-                                rows="15"><?php if ($quote)
+                                rows="15"><?php if (isset($quote))
                                     echo "[quote=" . $quote['username'] . "]" . strip_tags(trim($quote['message'])) . "[/quote]"; ?></textarea>
                         </div>
                     </div>
