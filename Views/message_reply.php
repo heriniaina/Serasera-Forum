@@ -23,7 +23,7 @@
     <form action="<?php echo site_url('forum/message/' . $message['mid'] . '/reply') ?>" method="post">
         <?php echo csrf_field(); ?>
         <div class="d-flex mb-3 border p-3">
-            <div class="me-3">
+            <div class="me-3 d-none d-md-block">
                 <img src="https://avatar.serasera.org/<?php echo md5($user['username']) ?>.jpg"
                     class="border rounded-circle"
                     style="width: 50px">
@@ -108,7 +108,7 @@
         format: 'bbcode',
         width: '100%',
         emoticonsEnabled: false,
-        toolbar: 'bold,italic,underline,color|link,quote,image,bulletlist,orderedlist|sary|youtube|source',,
+        toolbar: 'bold,italic,underline,color|link,quote,image,bulletlist,orderedlist|sary|youtube|source',
         style: 'https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/content/default.min.css'
     });
     $("#drag-and-drop-zone").dmUploader({
