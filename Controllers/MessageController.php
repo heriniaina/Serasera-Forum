@@ -203,7 +203,7 @@ class MessageController extends BaseController
             }
 
             if(count($notify) > 0) {
-                (new NotificationModel())->insertBatch($notify);
+            (new NotificationModel())->insertBatch($notify);
             }
             
 

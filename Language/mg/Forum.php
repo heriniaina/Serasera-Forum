@@ -54,5 +54,4 @@ return [
     'delete_message' => 'Hamafa hafatra',
     'delete' => 'Fafao',
     'delete_confirm' => 'Hofafaina tokoa ny hafatra?',
-    'cancel' => 'Aoka ihany',
 ];

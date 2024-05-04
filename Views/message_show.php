@@ -44,7 +44,7 @@
             </div>
             <?php if ($row['last_date'] != $row['date']) { ?>
                 <div class="text-end">
-                    <?php echo lang('Forum.last_change', ['last_date' => anchor('forum/message/' . $row['last_mid'], date_ago($row['last_date'])), 'last_username' => anchor('forum/message?username=' . $row['last_username'], $row['last_username'])]) ?>
+                    <?php echo lang('Forum.last_change', ['last_date' => anchor('forum/message/' . $row['last_mid'], date_ago($row['last_date'])), 'last_username' => anchor('forum/user/' . $row['username'], $row['last_username'])]) ?>
                 </div>
             <?php } ?>
         </div>
