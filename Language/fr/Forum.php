@@ -53,5 +53,5 @@ return [
     'delete_message' => 'Supprimer un message',
     'delete' => 'Supprimer',
     'delete_confirm' => 'Voulez-vous vraiment supprimer ce message ?',
-
+    'cancel' => 'Annuler',
 ];
