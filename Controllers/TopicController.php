@@ -50,4 +50,23 @@ class TopicController extends BaseController {
 
         return view('\Serasera\Forum\Views\topic_show', $this->data);
     }
+
+    public function edit($tid) {
+        $topicModel = new TopicModel();
+
+        if(isset($this->user->level['forum']) && $this->user->level['forum'] >= LEVEL_EDIT) {
+            $topic = $topicModel->when(['tid' => $tid])->first();
+        } else {
+            $topic = $topicModel->when(['tid' => $tid, 'username' => $this->user['username']])->first();
+        }
+
+        if(!$topic) {
+            return redirect()->to('forum/topics')->with('error', lang('Forum.topic_not_accessible'));
+        }
+
+        $this->data['page_title'] = lang('Forum.edit_topic');
+        $this->data['topic'] = $topic;
+
+        return view('\Serasera\Forum\Views\topic_edit', $this->data);
+    }
 }
