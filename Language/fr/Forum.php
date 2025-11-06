@@ -21,6 +21,7 @@ return [
     'topic_required' => 'Le sujet est nécessaire pour écrire.',
     'notification_message_replied_to_owner' => '<b>{username}</b> a répondu à votre message <b>{titre}</b>',
     'notification_message_replied_to_participants' => '<b>{username}</b> a répondu au message que vous avez répondu <b>{titre}</b>',
+    'notification_message_pending_approval' => 'Nisy rohy ny hevitra napetrak\'i {username}',
     'create_message_here' => 'Ecrire ici',
     'message_list' => 'Liste des messages',
     'title_containing_' => 'contenant <b>{0}</b> dans le titre',

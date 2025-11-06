@@ -86,6 +86,9 @@ class MessageController extends BaseController
 
             $time = time();
             $mid = uniqid('m');
+
+            $mMessage = strip_tags($this->request->getPost('message'));
+
             $data = [
                 'mid' => $mid,
                 'pid' => '',
@@ -101,6 +104,23 @@ class MessageController extends BaseController
                 'last_username' => $this->user['username'],
                 'last_mid' => $mid,
             ];
+
+            // check if message contains links 
+            if (preg_match('/https?:\/\/[^\s]+/', $mMessage)) {
+                // status = pending 
+                $data['status'] = 'pending';
+                // notify admin
+                $notificationModel = new NotificationModel();
+                $notificationModel->insert([
+                    'username' => 'admin',
+                    'message' => 'Forum.notification_message_pending_approval',
+                    'args' => json_encode(['username' => $this->user['username'], 'mid' => $mid]),
+                    'link' => 'forum/message/' . $mid
+                ]);
+                                
+            }
+
+            
 
             $messageModel = new MessageModel();
             Events::trigger('serasera_forum_message_post', $data);

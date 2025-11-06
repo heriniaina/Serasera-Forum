@@ -18,16 +18,19 @@
                 <b>
                     <?php echo $i . '. ' . $row['username'] ?>
                 </b>
+
                 <em>(
                     <?php echo date_ago($row['date']) ?>)
                 </em>
+                
             </div>
             <div>
 
                 <?php if (isset($user) && $user['username'] == $row['username'] || isset($user['level']['forum']) && $user['level']['forum'] > LEVEL_EDIT) { ?>
                     <div class="mb-3 text-end">
 
-                        <?php echo anchor('forum/message/edit/' . $row['mid'], lang('Forum.edit')) ?>
+                    <?php echo anchor('forum/user/ban/' . $row['username'], lang('Forum.ban_user')) ?>    
+                    <?php echo anchor('forum/message/edit/' . $row['mid'], lang('Forum.edit')) ?>
 
                         <?php if (isset($user) && $user['username'] == $row['username'] || isset($user['level']['forum']) && $user['level']['forum'] > LEVEL_EDIT) { ?>
                             <?php echo anchor('forum/message/delete/' . $row['mid'], lang('Forum.delete')) ?>

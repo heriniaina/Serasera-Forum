@@ -21,6 +21,7 @@ return [
     'topic_required' => 'Mila mifidy lohahevitra',
     'notification_message_replied_to_owner' => 'Novalian\'i <b>{username}</b> ny resaka napetrakao ao amin\'ny Dinika hoe <b>{titre}</b>',
     'notification_message_replied_to_participants' => 'Novalian\'i <b>{username}</b> ny resaka nandraisanao anjara ao amin\'ny Dinika hoe <b>{titre}</b>',
+    'notification_message_pending_approval' => 'Nisy rohy ny hevitra napetrak\'i {username}',
     'create_message_here' => 'Hanoratra ato',
     'message_list' => 'Lisitry ny dinika',
     'title_containing_' => 'misy hoe <b>{0}</b> eo amin\'ny lohateny',
