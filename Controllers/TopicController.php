@@ -55,9 +55,9 @@ class TopicController extends BaseController {
         $topicModel = new TopicModel();
 
         if(isset($this->user->level['forum']) && $this->user->level['forum'] >= LEVEL_EDIT) {
-            $topic = $topicModel->when(['tid' => $tid])->first();
+            $topic = $topicModel->where(['tid' => $tid])->first();
         } else {
-            $topic = $topicModel->when(['tid' => $tid, 'username' => $this->user['username']])->first();
+            $topic = $topicModel->where(['tid' => $tid, 'username' => $this->user['username']])->first();
         }
 
         if(!$topic) {

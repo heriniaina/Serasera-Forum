@@ -75,7 +75,7 @@ class MessageController extends BaseController
     {
 
         if (
-            $this->request->getMethod() === 'post' && $this->validate([
+            $this->request->is('post') && $this->validate([
                 'message' => 'required',
                 'tid' => 'required'
             ], [
@@ -162,8 +162,10 @@ class MessageController extends BaseController
             return redirect()->to('forum/topics')->with('error', lang('Forum.topic_not_accessible'));
         }
 
+
+        
         if (
-            $this->request->getMethod() === 'post' && $this->validate(
+            $this->request->is('post') && $this->validate(
                 ['message' => 'required'],
                 ['message' => lang('Forum.message_required')]
             )
@@ -425,7 +427,7 @@ class MessageController extends BaseController
         }
 
         if (
-            $this->request->getMethod() === 'post' && $this->validate([
+            $this->request->is('post') && $this->validate([
                 'message' => 'required',
                 'tid' => 'required'
             ], [
