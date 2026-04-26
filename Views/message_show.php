@@ -16,21 +16,26 @@
         <div class="flex-grow-1">
             <div>
                 <b>
-                    <?php echo $i . '. ' . $row['username'] ?>
+                    <?php if (isset($user['level']['forum']) && $user['level']['forum'] > LEVEL_EDIT) { ?>
+                        <a href="<?= site_url('serasera/admin/users/' . $row['username']) ?>">
+                        <?php } ?>
+                        <?php echo $i . '. ' . $row['username'] ?>
+                        <?php if (isset($user['level']['forum']) && $user['level']['forum'] > LEVEL_EDIT) { ?>
+                        </a>
+                    <?php } ?>
                 </b>
 
                 <em>(
                     <?php echo date_ago($row['date']) ?>)
                 </em>
-                
+
             </div>
             <div>
 
                 <?php if (isset($user) && $user['username'] == $row['username'] || isset($user['level']['forum']) && $user['level']['forum'] > LEVEL_EDIT) { ?>
                     <div class="mb-3 text-end">
 
-                    <?php echo anchor('forum/user/ban/' . $row['username'], lang('Forum.ban_user')) ?>    
-                    <?php echo anchor('forum/message/edit/' . $row['mid'], lang('Forum.edit')) ?>
+                        <?php echo anchor('forum/message/edit/' . $row['mid'], lang('Forum.edit')) ?>
 
                         <?php if (isset($user) && $user['username'] == $row['username'] || isset($user['level']['forum']) && $user['level']['forum'] > LEVEL_EDIT) { ?>
                             <?php echo anchor('forum/message/delete/' . $row['mid'], lang('Forum.delete')) ?>
@@ -67,8 +72,7 @@
                 <a name="<?php echo $row['mid']; ?>"></a>
                 <div class="me-3 d-none d-md-block">
                     <img src="https://avatar.serasera.org/<?php echo md5($user['username']) ?>.jpg"
-                        class="border rounded-circle"
-                        style="width: 50px">
+                        class="border rounded-circle" style="width: 50px">
                 </div>
                 <div class="flex-grow-1">
                     <div>
